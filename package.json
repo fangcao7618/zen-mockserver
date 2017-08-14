@@ -1,11 +1,11 @@
 {
   "name": "@didi/sea-mock-server",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "mock server",
   "main": "./build/index.js",
   "scripts": {
     "start": "node build/index.js",
-    "build": "webpack -d -w",
+    "build": "webpack -d",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src/; exit 0"
   },
