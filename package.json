@@ -1,5 +1,5 @@
 {
-  "name": "sea-mock-server",
+  "name": "@didi/sea-mock-server",
   "version": "0.0.1",
   "description": "mock server",
   "main": "./build/index.js",
