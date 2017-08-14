@@ -1,0 +1,62 @@
+{
+  "name": "sea-mock-server",
+  "version": "0.0.1",
+  "description": "mock server",
+  "main": "./build/index.js",
+  "scripts": {
+    "start": "node build/index.js",
+    "build": "webpack -d -w",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/; exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.xiaojukeji.com:blueone-fe/sea-mock-server.git"
+  },
+  "keywords": [
+    "mock server"
+  ],
+  "bin": {
+    "ms": "./bin/ms"
+  },
+  "author": "zhouyong@didichuxing.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://git.xiaojukeji.com/blueone-fe/sea-mock-server/issues"
+  },
+  "homepage": "https://git.xiaojukeji.com/blueone-fe/sea-mock-server#readme",
+  "dependencies": {
+    "commander": "^2.11.0",
+    "fs-extra": "^4.0.1",
+    "jade": "^1.11.0",
+    "koa": "^2.0.0",
+    "koa-router": "^7.0.1",
+    "koa-static": "^2.0.0",
+    "koa-views": "^5.0.1",
+    "mockjs": "^1.0.1-beta3",
+    "source-map-support": "^0.4.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.8.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-runtime": "^6.8.0",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "eslint": "^4.3.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "json-loader": "^0.5.4",
+    "pre-commit": "^1.2.2",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.0"
+  },
+  "pre-commit": [
+    "lint"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "method": "get",
+  "url": "/person",
+  "response": {
+    "status": 0,
+    "msg": "success",
+    "data|4-10": [
+      {
+        "name": "zhangsan",
+        "age|+1": 13
+      }
+    ]
+  }
+}
