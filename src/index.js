@@ -24,8 +24,13 @@ program
   .description('启动MockServer')
   .action(async ()=> {
     const runtimeDir = path.resolve('.', 'config');
-    startMock(runtimeDir);
-    console.log('MockServer已经启动，监听9000端口');
+    if (fs.existsSync(runtimeDir)) {
+      startMock(runtimeDir);
+      console.log('MockServer已经启动，监听9000端口');
+    } else {
+      console.log('请先指定配置文件夹');
+    }
+
   });
 
 program.parse(process.argv);
