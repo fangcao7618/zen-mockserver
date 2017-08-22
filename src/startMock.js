@@ -32,16 +32,6 @@ app.use(views( path.resolve(__dirname , '../src/views') , {
 
 app.use(serve(__dirname + '/static'));
 
-//koa v2
-app.use(async function responseTime(ctx, next){
-  const start = new Date();
-  await next();
-  const ms = new Date() -start;
-  ctx.set('X-Response-Time', ms+'ms');
-  console.log('X-Response-Time: '+ ms+'ms');
-
-});
-
 export default function startMock(workspaceDir) {
   const router = mockApi(workspaceDir);
   app

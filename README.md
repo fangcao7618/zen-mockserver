@@ -1,9 +1,13 @@
 # sea-mock-server
 一个好用的mock工具，
 
+#### 环境
+- [node.js](https://nodejs.org/) **v7.6** 及以上
+- [npm](https://www.npmjs.com/) v3 及以上
+
 #### 安装
 ```sh
-$ npm install -g sea-mock-server
+$ npm install -g @didi/sea-mock-server
 ```
 
 #### 使用

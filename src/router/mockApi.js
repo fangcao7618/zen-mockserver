@@ -6,34 +6,44 @@ import fs from 'fs';
 import path from 'path';
 import mockjs from 'mockjs';
 
-function getAllRequest(configDir) {
-  const requests = [];
-  // configDir = `/Users/zhouyong/Desktop/didi/sea-mock-server/src/config`;
-  fs.readdirSync(configDir).forEach(file => {
-    const absPath = path.resolve(configDir, file);
-    try {
-      const data = fs.readFileSync(absPath, 'utf8');
-      requests.push(mockjs.mock(JSON.parse(data)));
-    } catch(e) {
-      console.error(`[Error] in file: ${file}`);
-      console.error(`[Error] ${e.message}`);
-    }
+function parseFilesAsObject(dir) {
+  const list = [];
+  fs.readdirSync(dir).forEach(file => {
+    const filePath = path.resolve(dir, file);
+    const module = eval(`require('${filePath}')`);
+    list.push(module);
   });
-  return requests;
+  return list;
 }
 
-export default function (configDir) {
-
-  const requests = getAllRequest(configDir);
-
+function parseAllRequest(dataDir, router) {
+  const requests = parseFilesAsObject(dataDir);
   requests.forEach((request) => {
     const method = request.method.toLowerCase();
     const url = request.url;
     const res = request.response;
     router[method](url, (ctx) => {
-      ctx.body = res;
+      ctx.body = mockjs.mock(res);
     });
   });
+}
+
+function registerMiddleware(middlewareDir, router) {
+  fs.readdirSync(middlewareDir).forEach(file => {
+    const filePath = path.resolve(middlewareDir, file);
+    const middlewareFunc = eval(`require('${filePath}')`);
+    router.use(middlewareFunc);
+  });
+}
+
+export default function (workspaceDir) {
+
+  // const configDir = path.resolve(workspaceDir, 'config');
+  const dataDir = path.resolve(workspaceDir, 'data');
+  const middlewareDir = path.resolve(workspaceDir, 'middleware');
+
+  registerMiddleware(middlewareDir, router);
+  parseAllRequest(dataDir, router);
 
   return router;
 }
