@@ -1,6 +1,6 @@
 {
   "name": "@didi/sea-mock-server",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "mock server",
   "main": "./build/index.js",
   "scripts": {
