@@ -1,5 +1,5 @@
 {
-  "name": "@didi/sea-mock-server",
+  "name": "@didi/avatar-mock-server",
   "version": "0.0.9",
   "description": "mock server",
   "main": "./build/index.js",
@@ -7,11 +7,12 @@
     "start": "node build/index.js",
     "build": "webpack -d",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src/; exit 0"
+    "lint": "eslint src/; exit 0",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git@git.xiaojukeji.com:blueone-fe/sea-mock-server.git"
+    "url": "git@git.xiaojukeji.com:sh-fe-arc/avatar-mock-server.git"
   },
   "keywords": [
     "mock server"
@@ -22,9 +23,9 @@
   "author": "zhouyong@didichuxing.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://git.xiaojukeji.com/blueone-fe/sea-mock-server/issues"
+    "url": "https://git.xiaojukeji.com/sh-fe-arc/avatar-mock-server/issues"
   },
-  "homepage": "https://git.xiaojukeji.com/blueone-fe/sea-mock-server#readme",
+  "homepage": "https://git.xiaojukeji.com/sh-fe-arc/avatar-mock-server#readme",
   "dependencies": {
     "commander": "^2.11.0",
     "fs-extra": "^4.0.1",
