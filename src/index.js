@@ -26,7 +26,6 @@ program
     const runtimeDir = path.resolve('.');
     if (fs.existsSync(runtimeDir)) {
       startMock(runtimeDir);
-      console.log('MockServer已经启动，监听9000端口');
     } else {
       console.log('请先指定配置文件夹');
     }
