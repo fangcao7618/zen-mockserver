@@ -2,7 +2,7 @@
  * Created by zhouyong on 17/8/14.
  */
 import router from './router';
-import fs from 'fs';
+// import fs from 'fs';
 import path from 'path';
 import mockjs from 'mockjs';
 import utils from '../utils';
