@@ -38,7 +38,6 @@ app.use(serve(__dirname + '/static'));
 
 export default function startMock(workspaceDir) {
   const router = mockApi(workspaceDir);
-
   const configFile = path.resolve(workspaceDir, 'config', 'index.js');
   const config = eval(`require('${configFile}')`);
 

@@ -3,10 +3,14 @@ import fs from 'fs-extra';
 import path from 'path';
 import utils from './utils';
 import startMock from './startMock';
+import pkg from '../package.json';
+
+utils.checkNodeVersion();
 
 program
+  .version(pkg.version)
   .command('init').alias('i')
-  .description('init workspace directory')
+  .description('初始化工作目录')
   .action(async ()=> {
     const runtimeDir = path.resolve('.');
     const configDir = path.resolve(__dirname, '../src/template');
@@ -31,5 +35,9 @@ program
     }
 
   });
+
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+}
 
 program.parse(process.argv);

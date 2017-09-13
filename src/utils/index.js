@@ -4,6 +4,7 @@
 import fs from 'fs';
 import path from 'path';
 import net from 'net';
+import compareVersions from 'compare-versions';
 
 const utils = {};
 
@@ -54,6 +55,13 @@ utils.getDynamicPort = (cb) => {
   server.on('error', () => {
     utils.getDynamicPort(cb);
   });
+};
+
+utils.checkNodeVersion = () => {
+  if (compareVersions(process.versions.node, '7.6.0') === -1) {
+    console.error('[Error]The version of Node.js should be higher than v7.6.0.');
+    process.exit(-1);
+  }
 };
 
 export default utils;

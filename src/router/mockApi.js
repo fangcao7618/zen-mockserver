@@ -23,10 +23,16 @@ function parseAllRequest(dataDir, router) {
 }
 
 function registerMiddleware(middlewareDir, router) {
-  const middlewares = utils.parseFilesAsObject(middlewareDir);
-  middlewares.forEach((mw) => {
-    router.use(mw);
-  });
+  try {
+    const middlewares = utils.parseFilesAsObject(middlewareDir);
+    middlewares.forEach((mw) => {
+      router.use(mw);
+    });
+  } catch (e) {
+    console.log('[Error]Please check your code in mock/middleware.');
+    console.error(e);
+    process.exit(-1);
+  }
 }
 
 export default function (workspaceDir) {
