@@ -1,6 +1,6 @@
 {
   "name": "@didi/avatar-mock-server",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "mock server",
   "main": "./build/index.js",
   "scripts": {
