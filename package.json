@@ -20,6 +20,9 @@
   "bin": {
     "ms": "./bin/ms"
   },
+  "engines": {
+    "node": ">= 7.6.0"
+  },
   "author": "zhouyong@didichuxing.com",
   "license": "MIT",
   "bugs": {
