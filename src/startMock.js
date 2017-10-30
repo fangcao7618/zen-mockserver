@@ -36,6 +36,27 @@ app.use(views( path.resolve(__dirname , '../src/views') , {
 
 app.use(serve(__dirname + '/static'));
 
+const getProxyConfig = (config, dynamicPort) => {
+  const env = config.env;
+  const foo = config[env];
+  let target = `http://localhost:${dynamicPort}`;
+  let cookieDomainRewrite = false;
+  let headers = {};
+  if (foo) {
+    target = foo.url;
+    if (foo.headers) {
+      const {cookie, ...other} = foo.headers;
+      cookieDomainRewrite = cookie;
+      headers = other || {};
+    }
+  }
+  return {
+    target,
+    cookieDomainRewrite,
+    headers,
+  };
+};
+
 export default function startMock(workspaceDir) {
   const router = mockApi(workspaceDir);
   const configFile = path.resolve(workspaceDir, 'config', 'index.js');
@@ -48,14 +69,13 @@ export default function startMock(workspaceDir) {
 
   const port = config.port || 9000; // 默认端口
   utils.getDynamicPort((dynamicPort) => {
-    // console.log('dynamicPort:', dynamicPort);
     http.createServer(function (req, res) {
       const path = url.parse(req.url).pathname;
       let proxyPass = utils.findProxy(data, path);
       if (proxyPass !== undefined) {
         proxy.web(req, res, {target: proxyPass});
       } else {
-        proxy.web(req, res, {target: `http://localhost:${dynamicPort}`});
+        proxy.web(req, res, getProxyConfig(config, dynamicPort));
       }
       app.callback(req, res);
     }).listen(port);
