@@ -7,7 +7,7 @@
 
 #### 安装
 ```sh
-$ npm install -g @didi/sea-mock-server
+$ npm install -g sea-mock-server
 ```
 
 #### 使用

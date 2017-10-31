@@ -4,6 +4,7 @@
 import program from 'commander';
 import fs from 'fs-extra';
 import path from 'path';
+import colors from 'colors';
 import utils from './utils';
 import loadConfig from './config-loader';
 import pkg from '../../package.json';
@@ -12,33 +13,35 @@ utils.checkNodeVersion();
 
 program
   .version(pkg.version)
-  .command('init').alias('i')
-  .description('初始化工作目录')
+  .command('init')
+  .description('Initialize workspace.')
   .action(async ()=> {
     const runtimeDir = path.resolve('.');
     const configDir = path.resolve(__dirname, '../src/template');
     if (utils.isDirEmpty(runtimeDir)) {
       fs.copySync(configDir, runtimeDir);
-      console.log('初始化成功!');
+      utils.info('Please select an empty folder.');
     } else {
-      console.log('[错误] 请选择一个空文件夹!');
+      utils.error('!');
     }
   });
 
 program
   .command('start').alias('s')
 // .option('-d, --dir', '指定工作目录')
-  .description('启动MockServer')
+  .description('start the mock server.')
   .action(async ()=> {
     const runtimeDir = path.resolve('.');
     if (fs.existsSync(runtimeDir)) {
       loadConfig(runtimeDir);
     } else {
-      console.log('请先指定配置文件夹');
+      utils.warn('Please specify the configuration folder first.');
     }
 
   });
 
 if (!process.argv.slice(2).length) {
-  program.outputHelp();
+  program.outputHelp((txt) => (colors.red(txt)));
 }
+
+export default program;

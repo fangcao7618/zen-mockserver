@@ -29,8 +29,8 @@ function registerMiddleware(middlewareDir, router) {
       router.use(mw);
     });
   } catch (e) {
-    console.log('[Error]Please check your code in mock/middleware.');
-    console.error(e);
+    utils.error('Please check your code in mock/middleware.');
+    utils.error(e);
     process.exit(-1);
   }
 }

@@ -84,6 +84,6 @@ export default function startMock(workspaceDir) {
       .use(router.allowedMethods());
 
     app.listen(dynamicPort);
-    console.log(`MockServer已经启动，监听${port}端口`);
+    utils.info(`MockServer已经启动，监听${port}端口`);
   });
 }
