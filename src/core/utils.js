@@ -21,14 +21,18 @@ class Utils {
 
   }
 
-  parseFilesAsObject(dir) {
+  parseFilesAsList(dir) {
     const list = [];
     fs.readdirSync(dir).forEach(file => {
       const filePath = path.resolve(dir, file);
-      const module = eval(`require('${filePath}')`);
+      const module = this.parseFileAsObject(filePath);
       list.push(module);
     });
     return list;
+  }
+
+  parseFileAsObject(path) {
+    return eval(`require('${path}')`);
   }
 
   findProxy(data, path) {

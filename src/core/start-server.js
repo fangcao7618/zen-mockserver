@@ -10,6 +10,13 @@ import utils from './utils';
 
 
 const app = new Koa();
+app.use(async (ctx, next) => {
+  const start = Date.now();
+  await next();
+  const time = Date.now() - start;
+  utils.info(`${ctx.path}\tX-Response-Time: ${time}ms`);
+});
+
 app.use(async function(ctx, next){
   try{
     await next();
@@ -31,11 +38,12 @@ app.use(views( path.resolve(__dirname , '../src/views') , {
 
 app.use(serve(__dirname + '/static'));
 
-// todo: instead with http-proxy-middleware
-export default function startMock(workspaceDir) {
-  const router = loadConfig(workspaceDir);
 
-  utils.getAvailablePort(8000)
+export default function startMock(workspaceDir) {
+  const config = loadConfig(workspaceDir);
+
+  const router = config.router;
+  utils.getAvailablePort(config.port)
     .then((port) => {
       app
         .use(router.routes())
