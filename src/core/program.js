@@ -6,7 +6,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import colors from 'colors';
 import utils from './utils';
-import loadConfig from './config-loader';
+import startServer from './start-server';
 import pkg from '../../package.json';
 
 utils.checkNodeVersion();
@@ -20,20 +20,20 @@ program
     const configDir = path.resolve(__dirname, '../src/template');
     if (utils.isDirEmpty(runtimeDir)) {
       fs.copySync(configDir, runtimeDir);
-      utils.info('Please select an empty folder.');
+      utils.info('Initialized successfully.');
     } else {
-      utils.error('!');
+      utils.error('Please select an empty folder.');
     }
   });
 
 program
-  .command('start').alias('s')
+  .command('start')
 // .option('-d, --dir', '指定工作目录')
-  .description('start the mock server.')
+  .description('Start the mock server.')
   .action(async ()=> {
     const runtimeDir = path.resolve('.');
     if (fs.existsSync(runtimeDir)) {
-      loadConfig(runtimeDir);
+      startServer(runtimeDir);
     } else {
       utils.warn('Please specify the configuration folder first.');
     }

@@ -9,7 +9,7 @@ import colors from 'colors';
 
 class Utils {
   constructor() {
-    this.portrange = 45032;
+    this.portrange = 8000;
   }
 
   isDirEmpty(dir) {
@@ -44,9 +44,7 @@ class Utils {
     return proxyPass;
   }
 
-  getDynamicPort(cb) {
-    let port = this.portrange;
-    this.portrange += 1;
+  _getDynamicPort(cb, port) {
     const server = net.createServer();
     server.listen(port, () => {
       server.once('close', () => {
@@ -55,7 +53,15 @@ class Utils {
       server.close();
     });
     server.on('error', () => {
-      this.getDynamicPort(cb);
+      this._getDynamicPort(cb, port + 1);
+    });
+  }
+
+  getAvailablePort(initPort) {
+    return new Promise((resolve) => {
+      this._getDynamicPort((port) => {
+        resolve(port);
+      }, initPort);
     });
   }
 
@@ -67,15 +73,15 @@ class Utils {
   }
 
   info(msg) {
-    this.print('[info] ', colors.green(msg));
+    this.print(colors.green('[info] '), colors.green(msg));
   }
 
   error(msg) {
-    this.print('[error] ', colors.red(msg));
+    this.print(colors.red('[error] '), colors.red(msg));
   }
 
   warn(msg) {
-    this.print('[warning] ', colors.yellow(msg));
+    this.print(colors.yellow('[warning] '), colors.yellow(msg));
   }
 
   print(...args) {
