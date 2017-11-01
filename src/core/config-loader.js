@@ -43,8 +43,7 @@ function parseConfig(configFilePath, router) {
     config = utils.parseFileAsObject(configFilePath);
     let proxyList = config.proxy || [];
     proxyList.forEach((conf) => {
-      let {path, target, cookie, pathRewrite } = conf;
-      utils.info(JSON.stringify(pathRewrite));
+      let {path, target, /*cookie,*/ pathRewrite } = conf;
       router.use(
         path,
         c2k(
