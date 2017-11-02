@@ -7,7 +7,6 @@ module.exports = {
       pathRewrite: {
         '^/emojis' : '/events',     // rewrite path
       },
-      cookie: 'xxxxxxxxxx'
     },
     {
       path: '/users/:id',
@@ -15,7 +14,9 @@ module.exports = {
       pathRewrite: function (path) {
         return path + '/repos';
       },
-      cookie: 'xxxxxxxxxx'
+      headers: {
+        cookie: 'userId=xxxx'
+      }
     },
   ]
 };

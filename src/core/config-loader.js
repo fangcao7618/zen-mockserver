@@ -43,12 +43,14 @@ function parseConfig(configFilePath, router) {
     config = utils.parseFileAsObject(configFilePath);
     let proxyList = config.proxy || [];
     proxyList.forEach((conf) => {
-      let {path, target, /*cookie,*/ pathRewrite } = conf;
+      let {path, target, headers, pathRewrite } = conf;
       router.all(
         path,
         c2k(
           proxy({
+            logLevel: 'warn',
             target,
+            headers,
             pathRewrite,
             changeOrigin: true
           })
