@@ -2,11 +2,8 @@
  * Created by zhouyong on 17/10/31.
  */
 import router from './router';
-// import fs from 'fs';
 import path from 'path';
 import mockjs from 'mockjs';
-import proxy from 'http-proxy-middleware';
-import c2k from 'koa2-connect';
 import utils from './utils';
 
 
@@ -37,46 +34,13 @@ function registerMiddleware(middlewareDir, router) {
   }
 }
 
-function parseConfig(configFilePath, router) {
-  let config;
-  try {
-    config = utils.parseFileAsObject(configFilePath);
-    let proxyList = config.proxy || [];
-    proxyList.forEach((conf) => {
-      let {path, target, headers, pathRewrite } = conf;
-      router.all(
-        path,
-        c2k(
-          proxy({
-            logLevel: 'warn',
-            target,
-            headers,
-            pathRewrite,
-            changeOrigin: true
-          })
-        )
-      );
-    });
-
-  } catch(e) {
-    utils.error(e);
-    utils.error('Please check your config folder.');
-  }
-  return config;
-}
-
 export default function (workspaceDir) {
 
   const dataDir = path.resolve(workspaceDir, 'data');
   const middlewareDir = path.resolve(workspaceDir, 'middleware');
-  const configFilePath = path.resolve(workspaceDir, 'config', 'index.js');
 
   registerMiddleware(middlewareDir, router);
   parseAllRequest(dataDir, router);
-  let config = parseConfig(configFilePath, router);
 
-  return {
-    router,
-    port: config.port,
-  };
+  return router;
 }

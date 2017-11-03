@@ -2,17 +2,17 @@ module.exports = {
   port: 9000,
   proxy: [
     {
-      path: '/emojis',
-      target: 'https://api.github.com',
+      path: '/posts',
+      target: 'https://jsonplaceholder.typicode.com',
       pathRewrite: {
-        '^/emojis' : '/events',     // rewrite path
+        '^/posts' : '/photos',     // rewrite path
       },
     },
     {
-      path: '/users/:id',
-      target: 'https://api.github.com',
+      path: '/api/users',
+      target: 'https://jsonplaceholder.typicode.com',
       pathRewrite: function (path) {
-        return path + '/repos';
+        return path.replace('/api/users', '/users');
       },
       headers: {
         cookie: 'userId=xxxx'
