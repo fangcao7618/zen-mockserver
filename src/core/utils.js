@@ -17,8 +17,37 @@ class Utils {
     return files.length === 0;
   }
 
-  checkWorkSpace() {
+  exist(filePath) {
+    return fs.existsSync(filePath);
+  }
 
+  checkWorkSpace(runtimeDir) {
+    let valid = true;
+    const filesShouldExist = [
+      '',
+      'config',
+      ['config', 'index.js'],
+      'data',
+    ];
+    let filePathShouldExist = filesShouldExist.map(item => {
+      if (typeof item === 'string') {
+        return path.resolve(runtimeDir, item);
+      } else {
+        return path.resolve.apply(path, item);
+      }
+    });
+
+    filePathShouldExist.forEach(filePath => {
+      if (!this.exist(filePath)) {
+        this.error(`File not found: ${filePath}`);
+        valid = false;
+      }
+    });
+
+    if (!valid) {
+      this.error('Please make sure your workspace is correct.');
+      process.exit(-1);
+    }
   }
 
   parseFilesAsList(dir) {
@@ -61,7 +90,7 @@ class Utils {
     });
   }
 
-  getAvailablePort(initPort) {
+  getAvailablePort(initPort=9000) {
     return new Promise((resolve) => {
       this._getDynamicPort((port) => {
         resolve(port);

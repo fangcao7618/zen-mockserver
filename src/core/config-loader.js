@@ -1,9 +1,9 @@
 /**
  * Created by zhouyong on 17/10/31.
  */
-import router from './router';
 import path from 'path';
 import mockjs from 'mockjs';
+import router from './router';
 import utils from './utils';
 
 
@@ -39,7 +39,9 @@ export default function (workspaceDir) {
   const dataDir = path.resolve(workspaceDir, 'data');
   const middlewareDir = path.resolve(workspaceDir, 'middleware');
 
-  registerMiddleware(middlewareDir, router);
+  if (utils.exist(middlewareDir)) {
+    registerMiddleware(middlewareDir, router);
+  }
   parseAllRequest(dataDir, router);
 
   return router;

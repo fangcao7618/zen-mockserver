@@ -33,16 +33,13 @@ program
     let inputDir = dir || '';
     const runtimeDir = path.resolve('.', inputDir);
     utils.info(`Lodad workspace in ${runtimeDir}.`);
-    if (fs.existsSync(runtimeDir)) {
-      startServer(runtimeDir);
-    } else {
-      utils.warn('Please specify the configuration folder first.');
-    }
+    utils.checkWorkSpace(runtimeDir);
+    startServer(runtimeDir);
 
   });
 
 if (!process.argv.slice(2).length) {
-  program.outputHelp((txt) => (colors.red(txt)));
+  program.outputHelp((txt) => (colors.green(txt)));
 }
 
 export default program;
