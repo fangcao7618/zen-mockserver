@@ -1,25 +1,6 @@
 'use strict';
-
-var webpack = require('webpack');
-var fs = require('fs');
 var path = require('path');
-let BannerPlugin = webpack.BannerPlugin;
-
-//过滤node_modules中所有的模块
-var nodeModules = {};
-fs.readdirSync('node_modules')
-  .filter(function (x) {
-    return ['.bin'].indexOf(x) === -1;
-  })
-  .forEach(function (mod) {
-    nodeModules[mod] = 'commonjs ' + mod;
-  });
-
-
-nodeModules['transform-runtime'] = 'commonjs transform-runtime';
-nodeModules['stream'] = 'commonjs stream';
-
-// var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: {
@@ -30,37 +11,33 @@ module.exports = {
     filename: '[name].js'
   },
   target: 'node',
-  externals: nodeModules,
+  externals: [nodeExternals()],
   context: __dirname,
   node: {
     __filename: false,
     __dirname: false
   },
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loader: 'babel-loader',
-      query: {
-        plugins: ['transform-runtime'],
-        presets: ['es2015', 'stage-0']
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'bin')
+        ],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015', 'es2016', 'react'],
+            'plugins': ['transform-class-properties']
+          }
+        }
       },
-      // exclude: [
-      //     path.resolve(__dirname, 'node_modules'),
-      // ]
-      include: [
-        path.resolve(__dirname, 'src'),
-        path.resolve(__dirname, 'bin')
-      ]
-    },
-    {
-      test: /\.json$/,
-      loader: 'json-loader'
-    }]
+    ]
   },
+  devtool: 'source-map',
   resolve: {
-    extensions: ['', '.js', '.json']
-  },
-  plugins: [
-    new BannerPlugin('require("source-map-support").install();', {raw: true, entryOnly: false})
-  ]
+    extensions: ['.js', '.json']
+  }
 };
