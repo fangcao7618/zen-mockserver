@@ -32,7 +32,7 @@ program
   .action(async (dir)=> {
     let inputDir = dir || '';
     const runtimeDir = path.resolve('.', inputDir);
-    utils.info(`Lodad workspace in ${runtimeDir}.`);
+    utils.info(`Loading workspace from ${runtimeDir}.`);
     utils.checkWorkSpace(runtimeDir);
     startServer(runtimeDir);
 
