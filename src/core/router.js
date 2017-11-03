@@ -7,7 +7,7 @@ import koaRouter from 'koa-router';
 const router = koaRouter();
 
 router.get('/', async (ctx) =>{
-  await ctx.render('index.jade');
+  await ctx.render('index.pug');
 });
 
 // router.get(

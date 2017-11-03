@@ -28,10 +28,9 @@ app.use(async function(ctx, next){
 });
 
 app.use(views( path.resolve(__dirname , '../src/views') , {
-  extension: 'jade',
-  pretty: true, //not work?? why???
+  extension: 'pug',
   map: {
-    jade: 'jade'
+    html: 'pug'
   }
 }));
 

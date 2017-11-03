@@ -18,7 +18,7 @@
     "mock server"
   ],
   "bin": {
-    "ms": "./bin/ms"
+    "ams": "./bin/ams"
   },
   "engines": {
     "node": ">= 7.6.0"
@@ -35,13 +35,13 @@
     "compare-versions": "^3.0.1",
     "fs-extra": "^4.0.1",
     "http-proxy-middleware": "^0.17.4",
-    "jade": "^1.11.0",
     "koa": "^2.0.0",
     "koa-router": "^7.0.1",
     "koa-static": "^4.0.1",
     "koa-views": "^5.0.1",
     "koa2-connect": "^1.0.2",
-    "mockjs": "^1.0.1-beta3"
+    "mockjs": "^1.0.1-beta3",
+    "pug": "^2.0.0-rc.4"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
