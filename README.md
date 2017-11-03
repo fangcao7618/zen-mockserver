@@ -15,7 +15,7 @@ $ npm install avatar-mock-server
 ```
 然后在package.json的scripts中添加：
 ```
-"mock": "./node_modules/.bin/ams start  --config ../mockDir"
+"mock": "./node_modules/.bin/ams start ../mockDir"
 ```
 
 #### 快速使用

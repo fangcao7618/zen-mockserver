@@ -86,6 +86,6 @@ export default function startMock(workspaceDir) {
         .use(router.allowedMethods());
 
       app.listen(port);
-      utils.info(`MockServer已经启动，监听${port}端口`);
+      utils.info(`Ams is started，listening ${port} port.`);
     });
 }

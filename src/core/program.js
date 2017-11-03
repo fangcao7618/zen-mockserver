@@ -27,11 +27,12 @@ program
   });
 
 program
-  .command('start')
-// .option('-d, --dir', '指定工作目录')
+  .command('start [dir]')
   .description('Start the mock server.')
-  .action(async ()=> {
-    const runtimeDir = path.resolve('.');
+  .action(async (dir)=> {
+    let inputDir = dir || '';
+    const runtimeDir = path.resolve('.', inputDir);
+    utils.info(`Lodad workspace in ${runtimeDir}.`);
     if (fs.existsSync(runtimeDir)) {
       startServer(runtimeDir);
     } else {
