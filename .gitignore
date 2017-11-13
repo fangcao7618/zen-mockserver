@@ -5,3 +5,4 @@ dist/**
 !dist
 .idea/
 build
+package-lock.json

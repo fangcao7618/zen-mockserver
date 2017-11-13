@@ -10,7 +10,7 @@ import c2k from 'koa2-connect';
 import loadConfig from './config-loader';
 import utils from './utils';
 
-
+utils.info('启动。。。');
 const app = new Koa();
 app.use(async (ctx, next) => {
   const start = Date.now();
@@ -39,13 +39,22 @@ app.use(views( path.resolve(__dirname , '../src/views') , {
 
 app.use(serve(__dirname + '/static'));
 
+function getConfig(workspaceDir) {
+  const configFilePath = path.resolve(workspaceDir, 'config', 'index.js');
+  try {
+    return utils.parseFileAsObject(configFilePath);
+  } catch (e) {
+    utils.error(e);
+  }
+}
+
 // proxy
 function loadProxy(app, workspaceDir) {
-  const configFilePath = path.resolve(workspaceDir, 'config', 'index.js');
+
   let config;
   let proxyList;
   try {
-    config = utils.parseFileAsObject(configFilePath);
+    config = getConfig(workspaceDir);
     proxyList = config.proxy || [];
   } catch (e) {
     utils.error(e);
@@ -55,16 +64,19 @@ function loadProxy(app, workspaceDir) {
     for(let i = 0; i < proxyList.length; i++) {
       let {path, target, headers, pathRewrite} = proxyList[i];
       const regex = new RegExp(path);
+
       if (regex.test(ctx.path)) {
+        utils.info(`${ctx.path} === ${regex.test(ctx.path)}`);
         await c2k(
           proxy({
             logLevel: 'warn',
             target,
-            headers,
+            // headers,
             pathRewrite,
             changeOrigin: true
           })
-        )(ctx, next);
+        )(ctx);
+        return;
       }
     }
 
@@ -76,15 +88,15 @@ function loadProxy(app, workspaceDir) {
 
 
 export default function startMock(workspaceDir) {
-  const config = loadProxy(app, workspaceDir);
   const router = loadConfig(workspaceDir);
-
+  let config = getConfig(workspaceDir);
   utils.getAvailablePort(config.port)
     .then((port) => {
       app
         .use(router.routes())
         .use(router.allowedMethods());
 
+      loadProxy(app, workspaceDir);
       app.listen(port);
       utils.info(`Ams is started，listening on http://localhost:${port}.`);
     });

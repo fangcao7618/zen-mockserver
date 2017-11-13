@@ -4,7 +4,7 @@ import koaRouter from 'koa-router';
 
 const router = koaRouter();
 
-router.get('/', async (ctx) =>{
+router.get('/api', async (ctx) =>{
   await ctx.render('index.pug');
 });
 

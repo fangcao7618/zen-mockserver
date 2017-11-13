@@ -15,6 +15,7 @@ function parseAllRequest(dataDir, router) {
     const res = request.response;
     if (url !== undefined && method !== undefined) {
       router[method](url, (ctx) => {
+        utils.info('=====', ctx.path)
         ctx.body = mockjs.mock(res);
       });
     }
