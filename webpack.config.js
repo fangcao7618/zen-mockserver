@@ -30,7 +30,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['es2015', 'es2016', 'react'],
-            'plugins': ['transform-class-properties']
+            plugins: ['transform-runtime', 'transform-class-properties', 'transform-async-to-generator']
           }
         }
       },

@@ -10,7 +10,6 @@ import c2k from 'koa2-connect';
 import loadConfig from './config-loader';
 import utils from './utils';
 
-utils.info('启动。。。');
 const app = new Koa();
 app.use(async (ctx, next) => {
   const start = Date.now();
@@ -66,12 +65,11 @@ function loadProxy(app, workspaceDir) {
       const regex = new RegExp(path);
 
       if (regex.test(ctx.path)) {
-        utils.info(`${ctx.path} === ${regex.test(ctx.path)}`);
         await c2k(
           proxy({
             logLevel: 'warn',
             target,
-            // headers,
+            headers,
             pathRewrite,
             changeOrigin: true
           })
