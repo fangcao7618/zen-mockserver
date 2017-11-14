@@ -1,11 +1,12 @@
 {
   "name": "avatar-mock-server",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "mock server",
   "main": "./build/index.js",
   "scripts": {
     "start": "node build/index.js",
-    "build:dev": "webpack -w --config webpack.config.js",
+    "build:dev": "webpack --config webpack.config.js",
+    "build-watch:dev": "webpack -w --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src/; exit 0",
     "prepublish": "npm run build:dev"
