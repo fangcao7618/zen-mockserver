@@ -8,10 +8,6 @@ import compareVersions from 'compare-versions';
 import colors from 'colors';
 
 class Utils {
-  constructor() {
-    this.portrange = 8000;
-  }
-
   isDirEmpty(dir) {
     const files = fs.readdirSync(dir, 'utf8');
     return files.length === 0;
@@ -33,7 +29,7 @@ class Utils {
       if (typeof item === 'string') {
         return path.resolve(runtimeDir, item);
       } else {
-        return path.resolve.apply(path, item);
+        return path.resolve.apply(path, [runtimeDir, ...item]);
       }
     });
 
