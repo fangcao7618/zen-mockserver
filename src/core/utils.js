@@ -51,12 +51,17 @@ class Utils {
     fs.readdirSync(dir).forEach(file => {
       const filePath = path.resolve(dir, file);
       const module = this.parseFileAsObject(filePath);
-      list.push(module);
+      if (module) {
+        list.push(module);
+      }
     });
     return list;
   }
 
   parseFileAsObject(path) {
+    if (!/.*\.js(on)?$/.test(path)) {
+      return null;
+    }
     return eval(`require('${path}')`);
   }
 
