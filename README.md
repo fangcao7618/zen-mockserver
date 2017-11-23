@@ -11,11 +11,11 @@ $ npm install -g avatar-mock-server
 ```
 也可以仅在项目中使用：
 ```sh
-$ npm install avatar-mock-server
+$ npm install avatar-mock-server --save-dev
 ```
 然后在package.json的scripts中添加：
 ```
-"mock": "./node_modules/.bin/ams start ../mockDir"
+"mock:dev": "ams start ../mockDir"
 ```
 
 #### 快速使用
@@ -24,10 +24,11 @@ $ npm install avatar-mock-server
 ```sh
 $ ams init 
 ```
+会在当前文件夹下初始化配置文件。
 
 启动服务 
 ```sh
-$ ams start
+$ ams start [mockDir]
 ```
 浏览器访问 `http://localhost:9000/person` 查看API
 > 注意： 上面不一定是9000端口，如果9000端口号被占用，mock工具则会使用9001端口，以此类推
