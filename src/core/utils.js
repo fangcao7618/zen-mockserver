@@ -47,9 +47,17 @@ class Utils {
   }
 
   parseFilesAsList(dir) {
-    const list = [];
+    return this._parseFilesAsList(dir, []);
+  }
+
+  _parseFilesAsList(dir, list) {
+    // const list = [];
     fs.readdirSync(dir).forEach(file => {
       const filePath = path.resolve(dir, file);
+
+      if (fs.lstatSync(filePath).isDirectory()) {
+        this._parseFilesAsList(filePath, list);
+      }
       const module = this.parseFileAsObject(filePath);
       if (module) {
         list.push(module);
