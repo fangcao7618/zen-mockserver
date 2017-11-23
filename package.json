@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:ssehacker/avatar-mockserver.git"
   },
   "keywords": [
     "mock server"
@@ -42,14 +42,14 @@
     "koa-views": "^5.0.1",
     "koa2-connect": "^1.0.2",
     "mockjs": "^1.0.1-beta3",
-    "pug": "^2.0.0-rc.4"
+    "pug": "^2.0.0-rc.4",
+    "babel-plugin-transform-runtime": "^6.23.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2016": "^6.24.1",
