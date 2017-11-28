@@ -86,6 +86,7 @@ function loadProxy(app, workspaceDir) {
 
 
 export default function startMock(workspaceDir) {
+  loadProxy(app, workspaceDir);
   const router = loadConfig(workspaceDir);
   let config = getConfig(workspaceDir);
   utils.getAvailablePort(config.port)
@@ -94,7 +95,6 @@ export default function startMock(workspaceDir) {
         .use(router.routes())
         .use(router.allowedMethods());
 
-      loadProxy(app, workspaceDir);
       app.listen(port);
       utils.info(`Ams is started，listening on http://localhost:${port}.`);
     });
