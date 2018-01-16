@@ -65,6 +65,9 @@ function loadProxy(app, workspaceDir) {
       const regex = new RegExp(path);
 
       if (regex.test(ctx.path)) {
+        if (target.toLowerCase() === 'local') {
+          break;
+        }
         await c2k(
           proxy({
             logLevel: 'warn',
@@ -85,17 +88,16 @@ function loadProxy(app, workspaceDir) {
 }
 
 
-export default function startMock(workspaceDir) {
+export default async function startMock(workspaceDir) {
+  let config = getConfig(workspaceDir);
+  const port = await utils.getAvailablePort(config.port);
+
   loadProxy(app, workspaceDir);
   const router = loadConfig(workspaceDir);
-  let config = getConfig(workspaceDir);
-  utils.getAvailablePort(config.port)
-    .then((port) => {
-      app
-        .use(router.routes())
-        .use(router.allowedMethods());
+  app
+    .use(router.routes())
+    .use(router.allowedMethods());
 
-      app.listen(port);
-      utils.info(`Ams is started，listening on http://localhost:${port}.`);
-    });
+  app.listen(port);
+  utils.info(`MockServer is started，listening on http://localhost:${port}.`);
 }

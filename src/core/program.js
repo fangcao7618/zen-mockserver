@@ -34,7 +34,7 @@ program
     const runtimeDir = path.resolve('.', inputDir);
     utils.info(`Loading workspace from ${runtimeDir}.`);
     utils.checkWorkSpace(runtimeDir);
-    startServer(runtimeDir);
+    await startServer(runtimeDir);
 
   });
 
