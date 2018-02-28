@@ -1,6 +1,6 @@
 'use strict';
 
-import koaRouter from 'koa-router';
+const koaRouter = require('koa-router');
 
 const router = koaRouter();
 
@@ -8,4 +8,4 @@ router.get('/api', async (ctx) =>{
   await ctx.render('index.pug');
 });
 
-export default router;
+module.exports = router;

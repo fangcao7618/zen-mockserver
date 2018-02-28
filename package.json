@@ -19,7 +19,7 @@
     "mock server"
   ],
   "bin": {
-    "ams": "./bin/ams"
+    "mock": "./bin/mock"
   },
   "engines": {
     "node": ">= 7.6.0"

@@ -1,13 +1,13 @@
 /**
  * Created by zhouyong on 17/10/31.
  */
-import program from 'commander';
-import fs from 'fs-extra';
-import path from 'path';
-import colors from 'colors';
-import utils from './utils';
-import startServer from './start-server';
-import pkg from '../../package.json';
+const program = require('commander');
+const fs = require('fs-extra');
+const path = require('path');
+const colors = require('colors');
+const utils = require('./utils');
+const startServer = require('./start-server');
+const pkg = require('../../package.json');
 
 utils.checkNodeVersion();
 
@@ -42,4 +42,4 @@ if (!process.argv.slice(2).length) {
   program.outputHelp((txt) => (colors.green(txt)));
 }
 
-export default program;
+module.exports = program;

@@ -1,10 +1,10 @@
 /**
  * Created by zhouyong on 17/10/31.
  */
-import path from 'path';
-import mockjs from 'mockjs';
-import router from './router';
-import utils from './utils';
+const path = require('path');
+const mockjs = require('mockjs');
+const router = require('./router');
+const utils = require('./utils');
 
 
 function parseAllRequest(dataDir, router) {
@@ -34,7 +34,7 @@ function registerMiddleware(middlewareDir, router) {
   }
 }
 
-export default function (workspaceDir) {
+module.exports = function (workspaceDir) {
 
   const dataDir = path.resolve(workspaceDir, 'data');
   const middlewareDir = path.resolve(workspaceDir, 'middleware');
@@ -45,4 +45,4 @@ export default function (workspaceDir) {
   parseAllRequest(dataDir, router);
 
   return router;
-}
+};

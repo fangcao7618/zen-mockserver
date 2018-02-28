@@ -1,2 +1,2 @@
-import program from './core/program';
+const program = require('./core/program');
 program.parse(process.argv);

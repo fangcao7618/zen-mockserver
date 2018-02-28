@@ -1,14 +1,14 @@
 /**
  * Created by zhouyong on 17/10/31.
  */
-import Koa from 'koa';
-import path from 'path';
-import serve from 'koa-static';
-import views from 'koa-views';
-import proxy from 'http-proxy-middleware';
-import c2k from 'koa2-connect';
-import loadConfig from './config-loader';
-import utils from './utils';
+const Koa = require('koa');
+const path = require('path');
+const serve = require('koa-static');
+const views = require('koa-views');
+const proxy = require('http-proxy-middleware');
+const c2k = require('koa2-connect');
+const loadConfig = require('./config-loader');
+const utils = require('./utils');
 
 const app = new Koa();
 app.use(async (ctx, next) => {
@@ -88,7 +88,7 @@ function loadProxy(app, workspaceDir) {
 }
 
 
-export default async function startMock(workspaceDir) {
+module.exports = async function startMock(workspaceDir) {
   let config = getConfig(workspaceDir);
   const port = await utils.getAvailablePort(config.port);
 
@@ -100,4 +100,4 @@ export default async function startMock(workspaceDir) {
 
   app.listen(port);
   utils.info(`MockServer is started，listening on http://localhost:${port}.`);
-}
+};

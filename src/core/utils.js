@@ -1,11 +1,11 @@
 /**
  * Created by zhouyong on 17/8/14.
  */
-import fs from 'fs';
-import path from 'path';
-import net from 'net';
-import compareVersions from 'compare-versions';
-import colors from 'colors';
+const fs = require('fs');
+const path = require('path');
+const net = require('net');
+const compareVersions = require('compare-versions');
+const colors = require('colors');
 
 class Utils {
   isDirEmpty(dir) {
@@ -134,4 +134,4 @@ class Utils {
 
 }
 
-export default new Utils();
+module.exports = new Utils();

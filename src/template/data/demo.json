@@ -1,6 +1,9 @@
 {
   "method": "get",
   "url": "/person",
+  "parameter": {
+    "name": "zhangsan"
+  },
   "response": {
     "status": 0,
     "msg": "success",
