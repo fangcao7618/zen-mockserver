@@ -17,9 +17,9 @@ class Utils {
     return fs.existsSync(filePath);
   }
 
-  checkWorkSpace(runtimeDir) {
+  checkWorkSpace(runtimeDir, filesShouldExist) {
     let valid = true;
-    const filesShouldExist = [
+    filesShouldExist = filesShouldExist || [
       '',
       'config',
       ['config', 'index.js'],

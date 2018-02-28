@@ -7,6 +7,7 @@ const path = require('path');
 const colors = require('colors');
 const utils = require('./utils');
 const startServer = require('./start-server');
+const toSwagger = require('./to-swagger');
 const pkg = require('../../package.json');
 
 utils.checkNodeVersion();
@@ -40,7 +41,26 @@ program
     utils.info(`从路径${runtimeDir}加载配置文件.`);
     utils.checkWorkSpace(runtimeDir);
     await startServer(runtimeDir);
+  });
 
+program
+  .command('swagger [dir]')
+  .description('生成swagger描述文件.')
+  .action(async (dir)=> {
+    let inputDir = dir || '';
+    const runtimeDir = path.resolve('.', inputDir);
+    utils.info(`从路径${runtimeDir}加载配置文件.`);
+    const filesShouldExist =[
+      '',
+      'config',
+      ['config', 'index.js'],
+      'swagger-template',
+      ['swagger-template', 'index.json'],
+      'data',
+    ];
+    utils.checkWorkSpace(runtimeDir, filesShouldExist);
+
+    toSwagger(runtimeDir);
   });
 
 if (!process.argv.slice(2).length) {
