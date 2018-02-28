@@ -115,15 +115,15 @@ class Utils {
   }
 
   info(msg) {
-    this.print(colors.green('[info] '), colors.green(msg));
+    this.print(colors.green('[提示] '), colors.green(msg));
   }
 
   error(msg) {
-    this.print(colors.red('[error] '), colors.red(msg));
+    this.print(colors.red('[错误] '), colors.red(msg));
   }
 
   warn(msg) {
-    this.print(colors.yellow('[warning] '), colors.yellow(msg));
+    this.print(colors.yellow('[警告] '), colors.yellow(msg));
   }
 
   print(...args) {
