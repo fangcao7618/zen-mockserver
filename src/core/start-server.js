@@ -28,7 +28,7 @@ app.use(async function(ctx, next){
   }
 });
 
-app.use(views( path.resolve(__dirname , '../src/views') , {
+app.use(views( path.resolve(__dirname , '../views') , {
   extension: 'pug',
   map: {
     html: 'pug'
