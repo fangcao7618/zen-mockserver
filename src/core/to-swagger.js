@@ -5,6 +5,7 @@
 // const swaggerTmpl = require('./swagger-template.json');
 const path = require('path');
 const fs = require('fs');
+const mockjs = require('mockjs');
 const utils = require('./utils');
 // 反编译
 
@@ -15,9 +16,12 @@ function mockToMeta(mockData) {
   }
 
   const responseSchema = getMeta(mockData.response);
-  const parameters = parseParams(mockData.method, mockData.parameter);
+  const parameters = parseParams(mockData.method, mockData.parameter, mockData.url);
+  let url = mockData.url.replace(/:(\w+)/g, (_, key) => {
+    return `{${key}}`;
+  });
   return {
-    [mockData.url]: {
+    [url]: {
       [mockData.method.toLowerCase()]: {
         tags: mockData.tags,
         summary: mockData.description,
@@ -53,19 +57,40 @@ function flattenQuery(obj) {
 }
 
 
-function parseParams(method, parameters) {
+function parseParams(method, parameters, url) {
   let query = getMeta(parameters || {});
   if (method.toLowerCase() === 'get') {
     query = flattenQuery(query.properties);
   } else {
+    if (parameters) {
+      query = [
+        {
+          in: 'body',
+          name: 'body',
+          description: '字段信息',
+          required: true,
+          schema: query,
+        },
+      ];
+    } else {
+      query = [];
+    }
+  }
+
+  let matcher = url.match(/:(\w+)/g);
+  if (matcher) {
+    let queryInPath = matcher.map(str => {
+      let key = str.slice(1);
+      return {
+        name: key,
+        in: 'path',
+        'required': true,
+        'type': 'string',
+      };
+    });
     query = [
-      {
-        in: 'body',
-        name: 'body',
-        description: '字段信息',
-        required: true,
-        schema: query,
-      },
+      ...query,
+      ...queryInPath
     ];
   }
 
@@ -149,7 +174,7 @@ module.exports = function(workspaceDir) {
   let pathMap = {};
   const list = utils.parseFilesAsList(dataDir);
   list.forEach(obj => {
-    const data = mockToMeta(obj);
+    const data = mockToMeta(mockjs.mock(obj));
     pathMap = mergeAPIObject(pathMap, data);
   });
 
