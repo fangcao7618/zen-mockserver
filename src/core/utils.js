@@ -66,10 +66,19 @@ class Utils {
     return list;
   }
 
+  clearRequireCache(path) {
+    const cache = require.cache[path];
+    if (cache) {
+      delete require.cache[path];
+      cache.children.forEach(modal => this.clearRequireCache(modal.id));
+    }
+  }
+
   parseFileAsObject(path) {
     if (!/.*\.js(on)?$/.test(path)) {
       return null;
     }
+    this.clearRequireCache(path);
     return eval(`require('${path}')`);
   }
 

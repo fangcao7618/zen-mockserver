@@ -3,7 +3,6 @@
  */
 const path = require('path');
 const mockjs = require('mockjs');
-const router = require('./router');
 const utils = require('./utils');
 
 
@@ -39,6 +38,7 @@ module.exports = function (workspaceDir) {
   const dataDir = path.resolve(workspaceDir, 'data');
   const middlewareDir = path.resolve(workspaceDir, 'middleware');
 
+  const router = require('koa-router')();
   if (utils.exist(middlewareDir)) {
     registerMiddleware(middlewareDir, router);
   }

@@ -7,45 +7,12 @@ const serve = require('koa-static');
 const views = require('koa-views');
 const proxy = require('http-proxy-middleware');
 const c2k = require('koa2-connect');
+const chokidar = require('chokidar');
+const destroyable = require('server-destroy');
+const http = require('http');
 const loadConfig = require('./config-loader');
 const utils = require('./utils');
-
-const app = new Koa();
-app.use(async (ctx, next) => {
-  const start = Date.now();
-  await next();
-  const time = Date.now() - start;
-  utils.info(`${ctx.path}\t${time}ms`);
-});
-
-app.use(async function(ctx, next){
-  try{
-    await next();
-  }catch(err){
-    ctx.status = err.status || 500;
-    ctx.body = err.message;
-    // logger.error(err);
-  }
-});
-
-app.use(views( path.resolve(__dirname , '../views') , {
-  extension: 'pug',
-  map: {
-    html: 'pug'
-  }
-}));
-
-
-app.use(serve(__dirname + '/static'));
-
-function getConfig(workspaceDir) {
-  const configFilePath = path.resolve(workspaceDir, 'config', 'index.js');
-  try {
-    return utils.parseFileAsObject(configFilePath);
-  } catch (e) {
-    utils.error(e);
-  }
-}
+const pathRouter = require('./router');
 
 // proxy
 function loadProxy(app, workspaceDir) {
@@ -87,17 +54,70 @@ function loadProxy(app, workspaceDir) {
   return config;
 }
 
+function getConfig(workspaceDir) {
+  const configFilePath = path.resolve(workspaceDir, 'config', 'index.js');
+  try {
+    return utils.parseFileAsObject(configFilePath);
+  } catch (e) {
+    utils.error(e);
+  }
+}
 
-module.exports = async function startMock(workspaceDir) {
-  let config = getConfig(workspaceDir);
-  const port = await utils.getAvailablePort(config.port);
+async function createServer(workspaceDir) {
+  const app = new Koa();
+  app.use(async (ctx, next) => {
+    const start = Date.now();
+    await next();
+    const time = Date.now() - start;
+    utils.info(`${ctx.path}\t${time}ms`);
+  });
+
+  app.use(async function(ctx, next){
+    try{
+      await next();
+    }catch(err){
+      ctx.status = err.status || 500;
+      ctx.body = err.message;
+      // logger.error(err);
+    }
+  });
+
+  app.use(views( path.resolve(__dirname , '../views') , {
+    extension: 'pug',
+    map: {
+      html: 'pug'
+    }
+  }));
+
+
+  app.use(serve(__dirname + '/static'));
 
   loadProxy(app, workspaceDir);
   const router = loadConfig(workspaceDir);
   app
     .use(router.routes())
-    .use(router.allowedMethods());
+    .use(pathRouter.routes())
+    .use(router.allowedMethods())
+    .use(pathRouter.allowedMethods());
 
-  app.listen(port);
+  let config = getConfig(workspaceDir);
+  const port = await utils.getAvailablePort(config.port);
+  let server = http.createServer(app.callback());
+  server.listen(port);
   utils.info(`MockServer is started，listening on http://localhost:${port}.`);
+  return server;
+}
+
+
+module.exports = async function startMock(workspaceDir) {
+
+  let server = await createServer(workspaceDir);
+
+  chokidar.watch(workspaceDir, {ignored: /(^|[/\\])\../})
+    .on('change', async () => {
+      utils.info('file changed.');
+      destroyable(server);
+      server.destroy();
+      server = await createServer(workspaceDir);
+    });
 };

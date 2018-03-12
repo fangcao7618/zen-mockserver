@@ -2,7 +2,7 @@
   "name": "avatar-mock-server",
   "version": "0.0.25",
   "description": "mock server",
-  "main": "./build/index.js",
+  "main": "./bin/mock.js",
   "scripts": {
     "start": "node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,6 +28,8 @@
   },
   "homepage": "",
   "dependencies": {
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "chokidar": "^2.0.2",
     "colors": "^1.1.2",
     "commander": "^2.11.0",
     "compare-versions": "^3.0.1",
@@ -40,7 +42,7 @@
     "koa2-connect": "^1.0.2",
     "mockjs": "^1.0.1-beta3",
     "pug": "^2.0.0-rc.4",
-    "babel-plugin-transform-runtime": "^6.23.0"
+    "server-destroy": "^1.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
