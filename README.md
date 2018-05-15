@@ -1,7 +1,6 @@
+![Zen Logo](./public/images/zen_logo.png)
 # zen-mock-server
 一个实用的mock工具
-
-[Zen Logo](./public/images/zen_logo.png)
 
 #### 运行环境
 - [node.js](https://nodejs.org/) **v7.6** 以上
