@@ -1,5 +1,5 @@
 ![Zen Logo](./public/images/zen_logo.png)
-# zen-mock-server
+# zen-mockserver
 一个实用的mock工具
 
 #### 运行环境
@@ -8,11 +8,11 @@
 
 #### 安装
 ```sh
-$ npm install -g zen-mock-server
+$ npm install -g zen-mockserver
 ```
 也可以仅在项目中使用：
 ```sh
-$ npm install zen-mock-server --save-dev
+$ npm install zen-mockserver --save-dev
 ```
 然后在package.json的scripts中添加：
 ```
@@ -35,7 +35,7 @@ $ mock start [mockDir]
 > 注意： 上面不一定是9000端口，如果9000端口号被占用，mock工具则会使用9001端口，以此类推
 
 #### 文件配置
-`zen-mock-server（以下简称mock）`配置文件分为三部分，可以参考`mock init`生成的目录: 
+`zen-mockserver（以下简称mock）`配置文件分为三部分，可以参考`mock init`生成的目录: 
 - `config`：用于端口、代理等全局配置
 - `data`：自定义mock数据配置， 如demo.json：
 ```json
@@ -45,7 +45,7 @@ $ mock start [mockDir]
   "response": {
     "status": 0,
     "msg": "success",
-    "data|4-10": [  // 这里使用的是mockjs的语法
+    "data|4-10": [
       {
         "name": "zhangsan",
         "age|+1": 13
@@ -54,6 +54,8 @@ $ mock start [mockDir]
   }
 }
 ```
+上述`data|4-10`使用的是[mockjs](http://mockjs.com/examples.html)语法。
+
 - `middleware`：可根据需求自定义中间件
 
 #### 贡献代码
