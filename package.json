@@ -1,7 +1,7 @@
 {
-  "name": "avatar-mock-server",
-  "version": "0.0.26",
-  "description": "mock server",
+  "name": "zen-mockserver",
+  "version": "0.0.1",
+  "description": "zen mockserver",
   "main": "./bin/mock.js",
   "scripts": {
     "start": "node build/index.js",
