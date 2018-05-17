@@ -101,7 +101,7 @@ $ mock start
 - proxy [array] 代理配置
 
 #### 示例配置
-```json
+```js
 module.exports = {
   port: 9000,
   proxy: [
