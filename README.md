@@ -112,7 +112,7 @@ module.exports = {
       pathRewrite: {
         '^/posts' : '/photos',     // rewrite path
       },
-      header: {
+      headers: {
         cookie: 'sessionid=1001',
       }
     },
