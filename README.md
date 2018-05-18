@@ -71,6 +71,15 @@ $ mock start
 浏览器访问 `http://localhost:9000/api/students` 查看API
 > 注意： 上面不一定是9000端口，如果9000端口号被占用，mock工具则会使用9001端口，以此类推
 
+
+4. 生成swagger
+```sh
+$ mock swagger
+```
+
+会在当前目录下生成`swagger-data.json`文件，将文件内容粘贴至[swagger编辑器](https://editor.swagger.io/)中即可查看结果。
+
+
 ### 配置说明
 `zen-mockserver（以下简称mock）`配置文件分为三部分，可以参考`mock init`生成的目录: 
 - `config`：用于端口、代理等全局配置
