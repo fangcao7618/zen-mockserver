@@ -62,7 +62,7 @@ $ mock init
 ```
 并保存。
 
-> 上述我们使用了`data|4-10`，`age|+1`等[mockjs](http://mockjs.com/examples.html)语法，
+> 上述我们使用了`data|4-10`，`age|+1`等[mockjs](http://mockjs.com/examples.html)语法，以便生成随机数据，
 
 3. 启动服务
 ```sh

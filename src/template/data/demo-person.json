@@ -1,6 +1,6 @@
 {
   "method": "get",
-  "url": "/person",
+  "url": "/api/person",
   "tags": ["common"],
   "description": "根据车辆Id查询车辆基本信息接口",
   "parameter": {
