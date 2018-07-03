@@ -74,12 +74,12 @@ class Utils {
     }
   }
 
-  parseFileAsObject(path) {
-    if (!/.*\.js(on)?$/.test(path)) {
+  parseFileAsObject(pathname) {
+    if (!/.*\.js(on)?$/.test(pathname)) {
       return null;
     }
-    this.clearRequireCache(path);
-    return eval(`require('${path}')`);
+    this.clearRequireCache(pathname);
+    return eval(`require(path.resolve(pathname))`);
   }
 
   findProxy(data, path) {
